@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 
-function HelloWorld() {
+function HelloWorld(props) {
     return (
-        <h1>Hello world!</h1>
+        <h1>Hello {props.name}!</h1>
     );
 }
 
 const mountNode = document.getElementById("app");
 ReactDOM.render(
-    <HelloWorld></HelloWorld>,
+    <HelloWorld name="medegor44"></HelloWorld>,
     mountNode
 );
