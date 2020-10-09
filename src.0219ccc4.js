@@ -1017,7 +1017,7 @@ function HelloWorld(props) {
 var mountNode = document.getElementById("app");
 
 _reactDom.default.render( /*#__PURE__*/_react.default.createElement(HelloWorld, {
-  name: "medegor44"
+  name: "world"
 }), mountNode);
 },{"react":"n8MK","react-dom":"NKHc"}]},{},["Focm"], null)
-//# sourceMappingURL=/src.4b002720.js.map
+//# sourceMappingURL=/src.0219ccc4.js.map
