@@ -9,6 +9,6 @@ function HelloWorld(props) {
 
 const mountNode = document.getElementById("app");
 ReactDOM.render(
-    <HelloWorld name="medegor44"></HelloWorld>,
+    <HelloWorld name="world"></HelloWorld>,
     mountNode
 );
