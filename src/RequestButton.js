@@ -1,55 +1,36 @@
 import React, { useEffect, useState } from "react";
 
-function RequestButton(props) {
-    const [buttonState, setState] = useState({
-        clicked: false,
-        requestSucceed: false
-    });
-
-    console.log(`clicked: ${buttonState.clicked}`);
+function useApiRequest(initialUrl) {
+    const [url, setUrl] = useState(initialUrl);
+    const [succeed, setSucceed] = useState(false);
 
     useEffect(() => {
-        if (buttonState.clicked) {
-            const headers = new Headers()
-            headers.append("Content-Type", "application/json")
+        fetch(url)
+        .then(r => {
+            if (r.status === 200)
+                setSucceed(true);
+            else
+                setSucceed(false);
+        })
+    }, [url]);
 
-            const body = {"message":"Hello world"}
+    return [succeed, setUrl];
+}
 
-            const options = {
-                method: "POST",
-                headers,
-                mode: "cors",
-                body: JSON.stringify(body),
-            }
-
-            fetch("https://542ee5d5c48a1812a1411109fe31bfab.m.pipedream.net", options)
-            .then(response => {
-                if (response.status === 200)
-                    setState({
-                        clicked: false,
-                        requestSucceed: true
-                    });
-                else
-                    setState({
-                        clicked: false,
-                        requestSucceed: false
-                    });
-            })
-            .catch(err => {
-                setState({
-                    clicked: false,
-                    requestSucceed: false
-                });
-            })
-        }
-    });
-
-    console.log(`response: ${buttonState.requestSucceed}`);
+function RequestButton(props) {
+    const [succeed, setUrl] = useApiRequest("ya.ru");
+    const [currentUrl, setCurrentUrl] = useState("ya.ru")
 
     return (
-        <button onClick={() => setState({ clicked: true, requestSucceed: buttonState.requestSucceed })}>
-            Send request
-        </button>
+        <div>
+            <h1>
+                {succeed ? "Yes" : "No"}
+            </h1>
+            <input value={currentUrl} onChange={e => setCurrentUrl(e.target.value)}></input>
+            <button onClick={() => setUrl(currentUrl)}>
+                Send reuest
+            </button>
+        </div>
     );
 }
 
