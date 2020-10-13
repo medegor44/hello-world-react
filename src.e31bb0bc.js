@@ -28311,54 +28311,46 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-function RequestButton(props) {
-  var _useState = (0, _react.useState)({
-    clicked: false,
-    requestSucceed: false
-  }),
+function useApiRequest(initialUrl) {
+  var _useState = (0, _react.useState)(initialUrl),
       _useState2 = _slicedToArray(_useState, 2),
-      buttonState = _useState2[0],
-      setState = _useState2[1];
+      url = _useState2[0],
+      setUrl = _useState2[1];
 
-  console.log("clicked: ".concat(buttonState.clicked));
+  var _useState3 = (0, _react.useState)(false),
+      _useState4 = _slicedToArray(_useState3, 2),
+      succeed = _useState4[0],
+      setSucceed = _useState4[1];
+
   (0, _react.useEffect)(function () {
-    if (buttonState.clicked) {
-      var headers = new Headers();
-      headers.append("Content-Type", "application/json");
-      var body = {
-        "message": "Hello world"
-      };
-      var options = {
-        method: "POST",
-        headers: headers,
-        mode: "cors",
-        body: JSON.stringify(body)
-      };
-      fetch("https://542ee5d5c48a1812a1411109fe31bfab.m.pipedream.net", options).then(function (response) {
-        if (response.status === 200) setState({
-          clicked: false,
-          requestSucceed: true
-        });else setState({
-          clicked: false,
-          requestSucceed: false
-        });
-      }).catch(function (err) {
-        setState({
-          clicked: false,
-          requestSucceed: false
-        });
-      });
+    fetch(url).then(function (r) {
+      if (r.status === 200) setSucceed(true);else setSucceed(false);
+    });
+  }, [url]);
+  return [succeed, setUrl];
+}
+
+function RequestButton(props) {
+  var _useApiRequest = useApiRequest("ya.ru"),
+      _useApiRequest2 = _slicedToArray(_useApiRequest, 2),
+      succeed = _useApiRequest2[0],
+      setUrl = _useApiRequest2[1];
+
+  var _useState5 = (0, _react.useState)("ya.ru"),
+      _useState6 = _slicedToArray(_useState5, 2),
+      currentUrl = _useState6[0],
+      setCurrentUrl = _useState6[1];
+
+  return /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, succeed ? "Yes" : "No"), /*#__PURE__*/_react.default.createElement("input", {
+    value: currentUrl,
+    onChange: function onChange(e) {
+      return setCurrentUrl(e.target.value);
     }
-  });
-  console.log("response: ".concat(buttonState.requestSucceed));
-  return /*#__PURE__*/_react.default.createElement("button", {
+  }), /*#__PURE__*/_react.default.createElement("button", {
     onClick: function onClick() {
-      return setState({
-        clicked: true,
-        requestSucceed: buttonState.requestSucceed
-      });
+      return setUrl(currentUrl);
     }
-  }, "Send request");
+  }, "Send reuest"));
 }
 },{"react":"../node_modules/react/index.js"}],"index.js":[function(require,module,exports) {
 "use strict";
@@ -28402,7 +28394,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56671" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64387" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
